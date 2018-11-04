@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <title>CryptoZombies front-end</title>
     <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script language="javascript" type="text/javascript" src="web3.min.js"></script>
-    <script language="javascript" type="text/javascript" src="cryptozombies_abi.js"></script>
+    <script language="javascript" type="text/javascript" src="js/web3v1.0beta.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/cryptozombies_abi.js"></script>
   </head>
   <body>
     <div id="txStatus"></div>
     <div id="zombies"></div>
 
     <script>
+
       var cryptoZombies;
       var userAccount;
 
       function startApp() {
-        var cryptoZombiesAddress = "0x6c6d8677803aa9ce5fef3e900edadbde42a7d18a";
-        cryptoZombies = new web3js.eth.Contract(cryptoZombiesABI, cryptoZombiesAddress);
+        cryptoZombies = new web3.eth.Contract(cryptoZombiesABI, contractAddress);
 
         var accountInterval = setInterval(function() {
           // Check if account has changed
@@ -28,8 +28,6 @@
             .then(displayZombies);
           }
         }, 100);
-
-        // Start here
 
         cryptoZombies.events.Transfer({ filter: { _to: userAccount } })
         .on("data", function(event) {
